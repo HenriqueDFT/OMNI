@@ -1,0 +1,171 @@
+#======================================================#
+# Script: SIESTA input file  
+# By Ramon Sampaio Ferreira
+# Dept. Of Physics
+# Grupo de Nanofísica Computacional
+# Universidade Federal do Piauí 
+# Email:ramon.ferreira@ufpi.edu.br   
+#------------------------------------------------------#
+
+# -- NAME & LABEL --
+
+SystemName       Gr
+SystemLabel      Gr
+
+# -- MATERIAL --
+
+NumberOfAtoms    2
+NumberOfSpecies  1
+%block ChemicalSpeciesLabel
+ 1    6   C_gga
+%endblock ChemicalSpeciesLabel
+
+# -- CELL-ATOMIC-POSITION --
+
+LatticeConstant 1.00  Ang
+%block LatticeVectors
+   2.130424    1.2300000    0.000000
+   2.130424   -1.2300000    0.000000
+   0.000000    0.0000000    20.00000
+%endblock LatticeVectors
+AtomicCoordinatesFormat NotScaledCartesianAng
+AtomCoorFormatOut   NotScaledCartesianAng
+%block AtomicCoordinatesAndAtomicSpecies
+  0.0000000000000000        0.0000000000000000        0.0000000000000000 1 
+  1.4280000000000000        0.0000000000000000        0.0000000000000000 1 
+%endblock AtomicCoordinatesAndAtomicSpecies         
+
+# -- MONKHORST-PACK --
+#kgrid.Cutoff                          90.0 Ang
+%block kgrid_Monkhorst_Pack
+15   0   0   0.0
+0   15   0   0.0
+0   0   1   0.0
+%endblock kgrid_Monkhorst_Pack
+
+# -- SELF-CONSISTENT FIELD --
+
+MeshCutoff                            450.0 Ry
+PAO.BasisSize                         DZP
+PAO.EnergyShift                       0.05 eV
+XC.Functional                         GGA
+XC.Authors                            PBE
+MaxSCFIterations                      400
+SolutionMethod                        diagon
+%block PAO.Basis
+C_gga 3
+n=2 0 2 E 40 -0.9
+5.94869034392 2.5090419
+n=2 1 2 E 40 -0.9
+7.63838693570 2.6226139
+n=2 2 1 E 40 -0.9 Q 6.4005365 .0100000
+7.63838693570
+%endblock PAO.Basis
+
+
+# -- SELF-CONSISTENT FIELD-MIXING --
+
+DM.MixingWeight                       0.10
+DM.NumberPulay                        3
+DM.Tolerance                          1.d-6         
+DM.Require.Energy.Convergence         true 
+DM.Energy.Tolerance                   1.d-5 eV
+
+# -- MOLECULAR DYNAMICS-CONJUGATE-GRADIENT-METHOD --
+
+MD.TypeOfRun                          CG
+MD.NumCGsteps                         700
+MD.MaxForceTol                        0.01 eV/Ang
+MD.UseSaveXV                          true
+MD.UseSaveCG                          true
+MD.VariableCell                       true
+MD.MaxStressTol                       0.1 GPa
+WriteMDHistory                        true
+WriteMDXmol                           true
+
+# -- TARGET STRESS OPTIONS --
+
+MD.TargetPressure                     0.0 GPa
+%block MD.TargetStress
+1.0 1.0 1.0 0.0 0.0 0.0
+%endblock MD.TargetStress
+
+# -- SPIN FIELD --
+
+#Spin                                  polarized
+#SpinPolarized      	                 F
+#FixSpin             	                 F
+#NonCollinearSpin                      F
+#DM.InitSpinAF                         F
+
+# -- SAVING DENSITY-MATRIX & FOR POST RUN --
+
+DM.UseSaveDM          	              true
+UseSaveData           	              true
+LongOutput           	                true
+
+# -- SAVING WAVE/BAND/EIGEN/KPOINTS/ANIMATION INFORMATION --
+
+WriteMullikenPop	                    1
+WriteHirshfeldPop                     true
+WriteVoronoiPop                       true
+#WriteKbands                           true
+#WriteBands           	                true
+WriteCoorXmol 		                    true
+WriteCoorStep       	                true
+#WriteKpoints        	                true
+#WriteCoorCerius		                    true
+WriteHS             	                true
+WriteForces                           true
+SaveHS			                          true
+SaveRHO                               true
+#XML.Write                             true
+
+# -- AUXILIARY FORCE FIELD --
+
+#MM.UnitsDistance Ang  # what this program prints out DO NOT CHANGE
+#MM.UnitsEnergy    eV  # what this program prints out DO NOT CHANGE
+#MM.Grimme.S6     0.75 # Grimme-paper for PBE (correct for your functional)
+#MM.Grimme.D     20.   # Grimme-paper (correct for your functional)
+#%block MM.Potentials
+#  1   1 Grimme     18.14      2.904 # C, 10.1002/jcc.20495
+#  1   2 Grimme      5.13      2.453 # C / H
+#  1   3 Grimme     41.65      3.168 # C / Si
+#  2   2 Grimme      1.45      2.002 # H, 10.1002/jcc.20495
+#  2   3 Grimme     11.78      2.717 # H / Si
+#  3   3 Grimme     95.66      3.432 # Si, 10.1002/jcc.20495
+#%endblock MM.Potentials
+
+# -- GENERAL CONSTRAINTS --
+
+%block Geometry.Constraints
+cell-vector C
+%endblock Geometry.Constraints
+
+# -- ELECTRIC FIELD --
+
+#%block ExternalElectricField
+#0.000 0.000 0.000 V/Ang
+#%endblock ExternalElectricField
+
+# -- BAND-STRUCTURE-ANALYSIS --
+
+#BandLinesScale ReciprocalLatticeVectors
+#%block BandLines
+#1   0.000 0.000 0.000 \Gamma   #  Begin at Gamma
+#100  0.500 0.000 0.000  M       #  50 points from Gamma to M
+#100  0.333 0.333 0.000  K       #  50 points from M to K
+#100  0.000 0.000 0.000 \Gamma   #  50 points from K to Gamma
+#%endblock BandLines
+#%block ProjectedDensityOfStates
+#  -8.0  8.0   0.05  10000 eV
+#%endblock ProjectedDensityOfStates
+#%PDOS.kgrid_Monkhorst_Pack
+# 1   0    0    0.0
+# 0   1    0    0.0
+# 0   0    100    0.0
+#%end PDOS.kgrid_Monkhorst_Pack
+#COOP.Write .true.
+#WFS.Write.For.Bands .true.
+#WFS.Energy.Min -8 eV
+#WFS.Energy.Max  8 eV
