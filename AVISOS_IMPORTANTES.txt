@@ -1,0 +1,23 @@
+========================================
+         BOAS PRÁTICAS DE USO
+========================================
+✔️ Sempre utilize a interface do OMNI para alterar parâmetros.  
+✔️ Mantenha backups dos arquivos de entrada (FDF e PSF originais).  
+✔️ Finalize os cálculos antes de mover ou compartilhar o diretório.  
+✔️ Use GitHub/GitLab apenas para versionar o código, nunca os outputs.  
+✔️ Lembre-se: a cada execução o OMNI cria um arquivo de memória local
+   (`calculation_state.json`).  
+   - Se desejar rodar múltiplas execuções em paralelo, certifique-se de 
+     usar diretórios diferentes, para evitar conflitos entre os estados.  
+
+========================================
+      RESPONSABILIDADE DO USUÁRIO
+========================================
+O uso incorreto do software pode levar à perda de cálculos longos,  
+corrupção de dados ou resultados fisicamente inválidos.  
+
+Qualquer modificação fora do fluxo previsto é de total  
+responsabilidade do usuário.  
+
+========================================
+
