@@ -74,7 +74,22 @@ O programa foi projetado para ser usado em **três etapas simples**:
 - Clique em **"Executar Cálculos"** para iniciar a execução do **SIESTA**. O progresso será exibido na área de log.
 - Utilize o botão **"Parar Execução"** para interromper o processo de forma segura.
 - (Opcional) Use **"Tornar Inicial"** para salvar o estado atual e retomar o cálculo na próxima inicialização do programa.
+---
+## 🧪 Pasta de Testes
 
+A pasta `test/` contém exemplos para **validar a instalação** e testar funcionalidades do OMNI.
+
+### Executando os testes via terminal:
+
+```bash
+# Navegar para a pasta do software 
+```
+
+```bash
+
+python3 OMNI.py
+
+```
 ## 🛠️ Desenvolvimento
 
 O **OMNI** foi desenvolvido em **Python 3.x** com foco em **automação de cálculos DFT-SIESTA sob campos elétricos externos**.  
